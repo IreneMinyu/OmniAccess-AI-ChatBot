@@ -24,7 +24,7 @@ You also need to have an OpenAI API key to access the GPT-3.5 model.
 5. Run the <b>bot.py</b> and wait for the chatbot to initialize.
 6. Enter your questions or prompts into the text box and hit enter to receive a response from the chatbot.
 
-## Explaination
+## Explanation
 <p>
 This code initializes a chatbot using OpenAI's GPT-3.5 language model to answer questions related to a PDF file. It first extracts the text from the PDF file and splits it into smaller chunks using a <b>CharacterTextSplitter</b> object. It then uses the <b>OpenAIEmbeddings</b> class to generate embeddings for each chunk of text and stores them using the FAISS library. This allows for efficient similarity searches to be performed when a user inputs a question.
 </p>
