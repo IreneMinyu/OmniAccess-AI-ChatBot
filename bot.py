@@ -9,7 +9,7 @@ os.environ["OPENAI_API_KEY"] = "enter your openai api key here"
 chat = ChatOpenAI(temperature=0)
 
 '''Add the path to pickle file containing embedding '''
-with open("/Users/shashankvats/projects_openai/Langchain/langchain/gpt-4.pkl", 'rb') as f: 
+with open("/Users/wangariminyu/projects_openai/Langchain/langchain/gpt-4.pkl", 'rb') as f: 
     faiss_index = pickle.load(f)
 
 message_history = []
@@ -36,7 +36,8 @@ def predict(input):
     message_history.append({"role": "assistant", "content": f"{ai_response}"}) 
     
     # get pairs of msg["content"] from message history, skipping the pre-prompt: here.
-    response = [(message_history[i]["content"], message_history[i+1]["content"]) for i in range(0, len(message_history)-1, 2)]  # convert to tuples of list
+    response = [(message_history[i]["content"], message_history[i+1]["content"]) for i in range(0, len(message_history)-1, 2)]  
+    # convert to tuples of list
     return response
 
 # creates a new Blocks app and assigns it to the variable demo.
@@ -44,7 +45,7 @@ with gr.Blocks() as demo:
 
     messages = [
         SystemMessage(
-            content="You are a Q&A bot and you will answer all the questions that the user has. If you dont know the answer, output 'Sorry, I dont know' .")
+            content="You are a Q&A bot and you will provide info the user enquires. If you dont know the answer, output 'Sorry, I dont know' .")
     ]
 
     # creates a new Chatbot instance and assigns it to the variable chatbot.
@@ -62,13 +63,16 @@ with gr.Blocks() as demo:
     and the state instance as arguments. 
     This function processes the input and generates a response from the chatbot, 
     which is displayed in the output area.'''
-    query.submit(predict, query, chatbot) # submit(function, input, output)
-    #txt.submit(lambda :"", None, txt)  #Sets submit action to lambda function that returns empty string 
+    query.submit(predict, query, chatbot)
+    # submit(function, input, output)
+    # txt.submit(lambda :"", None, txt)  
+    # Sets submit action to lambda function that returns empty string 
 
     '''
     sets the submit action of the Textbox to a JavaScript function that returns an empty string. 
     This line is equivalent to the commented out line above, but uses a different implementation. 
     The _js parameter is used to pass a JavaScript function to the submit method.'''
-    query.submit(None, None, query, _js="() => {''}") # No function, no input to that function, submit action to textbox is a js function that returns empty string, so it clears immediately.
+    query.submit(None, None, query, _js="() => {''}") 
+    # No function, no input to that function, submit action to textbox is a js function that returns empty string, so it clears immediately.
          
 demo.launch()
